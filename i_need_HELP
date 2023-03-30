@@ -85,11 +85,10 @@ class SportsWalking(Training):
 
     def get_spent_calories(self) -> float:
         return (
-            (self.PARAM_FOR_FORMULA_1 * self.weight
-             + ((self.get_mean_speed() * self.KM_IN_M)**2
-                / (self.height / self.H_IN_SM))
-             * self.PARAM_FOR_FORMULA_1 * self.weight)
-            * (self.duration * self.MIN_IN_H)
+            ((self.PARAM_FOR_FORMULA_1 * self.weight
+              + ((self.get_mean_speed() * self.KM_IN_M)**2
+                 / self.height) * self.PARAM_FOR_FORMULA_2 * self.weight)
+             * (self.duration * self.MIN_IN_H))
         )
 
 
@@ -132,8 +131,8 @@ def read_package(workout_type: str, data: list) -> Training:
 
 def main(training: Training) -> None:
     """Главная функция."""
-    info: InfoMessage = training.show_training_info()
-    print(info.get_message())
+    info: InfoMessage = training.show_training_info().get_message()
+    print(info)
 
 
 if __name__ == '__main__':
